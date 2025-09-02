@@ -7,6 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/1yts_kal69c8Zg6Nd2Jah4YqGqnz06gQO
 """
 
+## Download the required model for semantic search
 from sentence_transformers import SentenceTransformer
 sentences = ["This is an example sentence", "Each sentence is converted"]
 
@@ -14,9 +15,12 @@ model = SentenceTransformer('sentence-transformers/all-MiniLM-L12-v2')
 embeddings = model.encode(sentences)
 print(embeddings)
 
+## Download dependencises
 ! git clone https://github.com/cyberytti/ToolHunt
 
 !pip install pyngrok
+
+
 # =========================
 # Directly Run ToolHunt in Colab (Debugging Mode)
 # =========================
