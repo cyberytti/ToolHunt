@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToolHunt - Cybersecurity Tool Search Engine</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00ff88;
+            --primary-dark: #00cc6a;
+            --secondary: #ff3366;
+            --accent: #00d4ff;
+            --dark: #0a0a0a;
+            --darker: #050505;
+            --light: #ffffff;
+            --gray: #8a8a8a;
+            --success: #00ff88;
+            --warning: #ffaa00;
+            --danger: #ff3366;
+            --card-bg: #111111;
+            --border: #222222;
+            --text-muted: #cccccc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', 'Monaco', 'Consolas', monospace;
+        }
+
+        body {
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255, 51, 102, 0.1) 0%, transparent 50%),
+                linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: var(--light);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated background grid */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 136, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            animation: fadeInDown 1s ease;
+            position: relative;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+
+        header h1 {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, var(--primary), var(--accent), var(--secondary));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            animation: gradientShift 3s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+            letter-spacing: 2px;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        header p {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 300;
+        }
+
+        .cyber-badge {
+            display: inline-block;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(0, 255, 136, 0); }
+        }
+
+        .search-container {
+            background: rgba(17, 17, 17, 0.9);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            margin-bottom: 50px;
+            border: 1px solid var(--border);
+            animation: fadeInUp 1s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .search-container::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            background: linear-gradient(45deg, var(--primary), var(--accent), var(--secondary));
+            border-radius: 20px;
+            z-index: -1;
+            opacity: 0.2;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 20px 30px;
+            border: 2px solid var(--border);
+            border-radius: 15px;
+            background: rgba(20, 20, 20, 0.8);
+            color: white;
+            font-size: 1.1rem;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 
+                inset 0 2px 10px rgba(0, 0, 0, 0.3),
+                0 0 0 3px rgba(0, 255, 136, 0.2),
+                0 0 20px rgba(0, 255, 136, 0.3);
+            background: rgba(10, 20, 15, 0.9);
+        }
+
+        .search-box input::placeholder {
+            color: #666;
+            font-style: italic;
+        }
+
+        .search-box button {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--dark);
+            border: none;
+            border-radius: 15px;
+            padding: 20px 40px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 
+                0 8px 25px rgba(0, 255, 136, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .search-box button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .search-box button:hover::before {
+            left: 100%;
+        }
+
+        .search-box button:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                0 12px 35px rgba(0, 255, 136, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .search-box button:active {
+            transform: translateY(0);
+        }
+
+        .examples {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+
+        .example-tag {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            color: var(--primary);
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .example-tag:hover {
+            background: rgba(0, 255, 136, 0.2);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
+        }
+
+        .results-container {
+            display: none;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 25px;
+            background: rgba(17, 17, 17, 0.8);
+            border-radius: 15px;
+            border: 1px solid var(--border);
+        }
+
+        .results-count {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .results-count::before {
+            content: '> ';
+            color: var(--accent);
+        }
+
+        .sort-options select {
+            background: rgba(20, 20, 20, 0.9);
+            color: var(--light);
+            border: 2px solid var(--border);
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sort-options select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.2);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 30px;
+        }
+
+        .tool-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .tool-card:hover::before {
+            opacity: 1;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.6),
+                0 0 30px rgba(0, 255, 136, 0.2);
+            border-color: rgba(0, 255, 136, 0.5);
+        }
+
+        .card-header {
+            padding: 25px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
+
+        .card-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            color: var(--light);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-header h3::before {
+            content: '[';
+            color: var(--primary);
+            margin-right: 5px;
+        }
+
+        .card-header h3::after {
+            content: ']';
+            color: var(--primary);
+            margin-left: 5px;
+        }
+
+        .category {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(255, 51, 102, 0.2));
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 6px 15px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        .card-body p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        .card-footer {
+            padding: 0 25px 25px;
+        }
+
+        .tool-link {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--dark);
+            padding: 15px 25px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .tool-link:hover::before {
+            left: 100%;
+        }
+
+        .tool-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.4);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 80px 20px;
+            grid-column: 1 / -1;
+            background: rgba(17, 17, 17, 0.5);
+            border-radius: 20px;
+            border: 2px dashed var(--border);
+        }
+
+        .no-results i {
+            font-size: 5rem;
+            color: var(--gray);
+            margin-bottom: 25px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .no-results h3 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .no-results p {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 80px;
+            grid-column: 1 / -1;
+        }
+
+        .spinner {
+            border: 6px solid rgba(0, 255, 136, 0.1);
+            border-top: 6px solid var(--primary);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 25px;
+        }
+
+        .loading h3 {
+            font-size: 1.6rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .loading p {
+            color: var(--gray);
+            font-style: italic;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Security themed decorations */
+        .security-icons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 15px;
+            opacity: 0.3;
+        }
+
+        .security-icons i {
+            font-size: 1.5rem;
+            color: var(--primary);
+            animation: blink 3s infinite;
+        }
+
+        .security-icons i:nth-child(2) {
+            animation-delay: 1s;
+        }
+
+        .security-icons i:nth-child(3) {
+            animation-delay: 2s;
+        }
+
+        @keyframes blink {
+            0%, 90%, 100% { opacity: 0.3; }
+            5%, 85% { opacity: 1; }
+        }
+
+        /* Terminal-like status bar */
+        .status-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .status-left {
+            color: var(--primary);
+        }
+
+        .status-right {
+            color: var(--gray);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .search-box {
+                flex-direction: column;
+            }
+
+            .search-box button {
+                padding: 18px;
+                width: 100%;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 2.8rem;
+            }
+
+            .results-header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .security-icons {
+                display: none;
+            }
+
+            .status-bar {
+                flex-direction: column;
+                gap: 5px;
+                text-align: center;
+            }
+        }
+
+        /* Improved category styling */
+        .category.network { border-color: #00ff88; color: #00ff88; }
+        .category.password { border-color: #ff3366; color: #ff3366; }
+        .category.vulnerability { border-color: #ffaa00; color: #ffaa00; }
+        .category.forensics { border-color: #9d4edd; color: #9d4edd; }
+        .category.web { border-color: #00d4ff; color: #00d4ff; }
+    </style>
+</head>
+<body>
+    <div class="security-icons">
+        <i class="fas fa-shield-alt"></i>
+        <i class="fas fa-bug"></i>
+        <i class="fas fa-lock"></i>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-search"></i> ToolHunt</h1>
+            <p>Advanced Cybersecurity Arsenal Discovery Platform</p>
+            <div class="cyber-badge">
+                <i class="fas fa-terminal"></i> Penetration Testing • Digital Forensics • Security Analysis
+            </div>
+        </header>
+
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Enter attack vector, security domain, or tool functionality... e.g., 'sql injection scanner', 'network enumeration'">
+                <button id="searchButton">
+                    <i class="fas fa-crosshairs"></i> Hunt Tools
+                </button>
+            </div>
+            <div class="examples">
+                <div class="example-tag"><i class="fas fa-network-wired"></i> network scanner</div>
+                <div class="example-tag"><i class="fas fa-key"></i> password cracker</div>
+                <div class="example-tag"><i class="fas fa-shield-virus"></i> vulnerability scanner</div>
+                <div class="example-tag"><i class="fas fa-globe"></i> web application security</div>
+                <div class="example-tag"><i class="fas fa-search"></i> digital forensics</div>
+                <div class="example-tag"><i class="fas fa-user-secret"></i> penetration testing</div>
+            </div>
+        </div>
+
+        <div class="loading" id="loadingIndicator">
+            <div class="spinner"></div>
+            <h3><i class="fas fa-crosshairs"></i> Scanning Arsenal...</h3>
+            <p>Analyzing cybersecurity tool database</p>
+        </div>
+
+        <div class="results-container" id="resultsContainer">
+            <div class="results-header">
+                <div class="results-count" id="resultsCount">Ready to hunt cybersecurity tools</div>
+                
+            </div>
+            <div class="tools-grid" id="toolsGrid">
+                <!-- Results will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <div class="status-bar">
+        <div class="status-left">
+            <i class="fas fa-terminal"></i> ToolHunt v2.0 - Cybersecurity Arsenal
+        </div>
+        <div class="status-right">
+            <i class="fas fa-shield-alt"></i> Secure • <i class="fas fa-clock"></i> <span id="currentTime"></span>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const searchInput = document.getElementById('searchInput');
+        const searchButton = document.getElementById('searchButton');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const toolsGrid = document.getElementById('toolsGrid');
+        const resultsCount = document.getElementById('resultsCount');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const sortOptions = document.getElementById('sortOptions');
+        const exampleTags = document.querySelectorAll('.example-tag');
+
+        // Update time in status bar
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('currentTime').textContent = now.toLocaleTimeString();
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // Event Listeners
+        searchButton.addEventListener('click', performSearch);
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') performSearch();
+        });
+
+        exampleTags.forEach(tag => {
+            tag.addEventListener('click', () => {
+                const tagText = tag.textContent.trim();
+                // Remove icon and extract just the text
+                const cleanText = tagText.split(' ').slice(1).join(' ');
+                searchInput.value = cleanText;
+                performSearch();
+            });
+        });
+
+        sortOptions.addEventListener('change', () => {
+            const query = searchInput.value.trim();
+            if (query && toolsGrid.children.length > 0 && !toolsGrid.querySelector('.no-results')) {
+                performSearch(); // Re-search with current query to re-sort
+            }
+        });
+
+        // Search Function
+        function performSearch() {
+            const query = searchInput.value.trim();
+            
+            if (!query) {
+                showAlert('Please enter a search query to hunt for tools', 'warning');
+                return;
+            }
+
+            // Show loading indicator
+            loadingIndicator.style.display = 'block';
+            resultsContainer.style.display = 'none';
+
+            // Call Flask backend
+            fetch('/search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ query: query })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                // Handle null or empty results
+                const results = data.results || [];
+                displayResults(results);
+                
+                // Hide loading, show results
+                loadingIndicator.style.display = 'none';
+                resultsContainer.style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                loadingIndicator.style.display = 'none';
+                
+                // Ensure resultsContainer is shown and properly display error
+                resultsContainer.style.display = 'block';
+                toolsGrid.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-exclamation-triangle" style="color: var(--danger);"></i>
+                        <h3 style="color: var(--danger);">Connection Error</h3>
+                        <p>Failed to connect to the tool database</p>
+                        <p style="margin-top: 15px; font-size: 0.9rem; color: var(--gray);">
+                            <i class="fas fa-info-circle"></i> Check network connection and try again
+                        </p>
+                    </div>
+                `;
+                
+                // Update results count for error state
+                if (resultsCount) {
+                    resultsCount.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Search failed`;
+                }
+            });
+        }
+
+        // Display Results
+        function displayResults(tools) {
+            // Ensure tools is an array
+            if (!Array.isArray(tools)) {
+                tools = [];
+            }
+            
+            // Sort tools based on selected option (removed 'name' option)
+            const sortBy = sortOptions ? sortOptions.value : 'relevance';
+            let sortedTools = [...tools];
+            
+            switch(sortBy) {
+                case 'category':
+                    sortedTools.sort((a, b) => (a.category || 'Uncategorized').localeCompare(b.category || 'Uncategorized'));
+                    break;
+                // 'relevance' keeps original order (from search)
+            }
+            
+            // Update results count
+            if (sortedTools.length === 0) {
+                resultsCount.innerHTML = `<i class="fas fa-search-minus"></i> No tools found in arsenal`;
+            } else {
+                resultsCount.innerHTML = `<i class="fas fa-crosshairs"></i> Found ${sortedTools.length} cybersecurity tool${sortedTools.length !== 1 ? 's' : ''} in arsenal`;
+            }
+            
+            // Clear previous results
+            toolsGrid.innerHTML = '';
+            
+            // Display message if no results
+            if (sortedTools.length === 0) {
+                toolsGrid.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-search-minus"></i>
+                        <h3>No Tools Found in Arsenal</h3>
+                        <p>No cybersecurity tools match your query. Try different keywords like:</p>
+                        <div style="margin-top: 20px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+                            <span style="background: rgba(0, 255, 136, 0.1); padding: 8px 15px; border-radius: 15px; font-size: 0.9rem;">• scanner • enumeration • exploit • forensics •</span>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Populate tools grid
+            sortedTools.forEach((tool, index) => {
+                const toolCard = document.createElement('div');
+                toolCard.className = 'tool-card';
+                
+                // Determine category class for styling
+                const categoryClass = getCategoryClass(tool.category);
+                
+                toolCard.innerHTML = `
+                    <div class="card-header">
+                        <h3>${tool.name || 'Unknown Tool'}</h3>
+                        <span class="category ${categoryClass}">${tool.category || 'Uncategorized'}</span>
+                    </div>
+                    <div class="card-body">
+                        <p>${tool.description || 'No description available'}</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="${tool.link || '#'}" target="_blank" class="tool-link" ${!tool.link ? 'style="opacity: 0.5; pointer-events: none;"' : ''}>
+                            <i class="fas fa-external-link-alt"></i> ${tool.link ? 'Access Tool' : 'No Link Available'}
+                        </a>
+                    </div>
+                `;
+                
+                // Add staggered animation
+                toolCard.style.animationDelay = `${index * 0.1}s`;
+                toolCard.style.animation = 'fadeInUp 0.6s ease forwards';
+                toolCard.style.opacity = '0';
+                
+                toolsGrid.appendChild(toolCard);
+            });
+        }
+
+        // Get category class for styling
+        function getCategoryClass(category) {
+            if (!category) return '';
+            const cat = category.toLowerCase();
+            if (cat.includes('network')) return 'network';
+            if (cat.includes('password')) return 'password';
+            if (cat.includes('vulnerability') || cat.includes('vuln')) return 'vulnerability';
+            if (cat.includes('forensic')) return 'forensics';
+            if (cat.includes('web')) return 'web';
+            return '';
+        }
+
+        // Show error with cybersecurity theme
+        function showError(message) {
+            toolsGrid.innerHTML = `
+                <div class="no-results">
+                    <i class="fas fa-exclamation-triangle" style="color: var(--danger);"></i>
+                    <h3 style="color: var(--danger);">System Error</h3>
+                    <p>${message}</p>
+                    <p style="margin-top: 15px; font-size: 0.9rem; color: var(--gray);">
+                        <i class="fas fa-info-circle"></i> Check network connection and try again
+                    </p>
+                </div>
+            `;
+        }
+
+        // Show alert function
+        function showAlert(message, type = 'info') {
+            // Create alert element
+            const alert = document.createElement('div');
+            alert.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'warning' ? 'rgba(255, 170, 0, 0.9)' : 'rgba(0, 255, 136, 0.9)'};
+                color: var(--dark);
+                padding: 15px 25px;
+                border-radius: 10px;
+                font-weight: 600;
+                z-index: 10000;
+                animation: slideInRight 0.3s ease;
+                border: 2px solid ${type === 'warning' ? '#ffaa00' : '#00ff88'};
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            `;
+            alert.innerHTML = `<i class="fas fa-${type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i> ${message}`;
+            
+            document.body.appendChild(alert);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                alert.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => alert.remove(), 300);
+            }, 3000);
+        }
+
+        // Add slide animations for alerts
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOutRight {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            // Ensure all elements exist before setting up
+            if (resultsContainer) {
+                resultsContainer.style.display = 'block';
+            }
+            
+            // Add typing effect to search input
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    if (e.target.value.length > 0) {
+                        e.target.style.borderColor = 'rgba(0, 255, 136, 0.5)';
+                    } else {
+                        e.target.style.borderColor = 'var(--border)';
+                    }
+                });
+                
+                // Add terminal-like focus effects
+                searchInput.addEventListener('focus', () => {
+                    searchInput.parentElement.style.transform = 'scale(1.02)';
+                });
+
+                searchInput.addEventListener('blur', () => {
+                    searchInput.parentElement.style.transform = 'scale(1)';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
