@@ -1,31 +1,45 @@
-from sentence_transformers import SentenceTransformer, util
-import torch
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_community.vectorstores import FAISS
+from langchain_community.retrievers import BM25Retriever
 
-# Load the model
-model = SentenceTransformer('sentence-transformers/all-MiniLM-L12-v2')
 
-def search(descriptions,query):
-    output=[]
-    # Encode query and descriptions
-    query_embedding = model.encode(query, convert_to_tensor=True)
-    answer_embeddings = model.encode(descriptions, convert_to_tensor=True)
+embedding = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L12-v2")
 
-    # Compute cosine similarities
-    cosine_scores = util.cos_sim(query_embedding, answer_embeddings)[0]  # Shape: [num_descriptions]
 
-    # Set threshold
-    threshold = 0.5
-
-    # Filter scores above threshold AND sort by score (descending)
-    filtered_scores = cosine_scores[cosine_scores > threshold]
-    if len(filtered_scores) == 0:
-        return []
-    else:
-        # Get indices of all scores above threshold, sorted by score (highest first)
-        sorted_indices = torch.argsort(filtered_scores, descending=True)
-        filtered_indices = torch.nonzero(cosine_scores > threshold).flatten()  # Original indices
-        ranked_indices = filtered_indices[sorted_indices]  # Reorder by score
-
-        for idx in ranked_indices:
-            output.append(descriptions[idx])
-        return output
+def search(doc_list, query, similarity_threshold=0.5):
+    # Create retrievers
+    bm25_retriever = BM25Retriever.from_texts(doc_list)
+    faiss_vectorstore = FAISS.from_texts(doc_list, embedding)
+    faiss_retriever = faiss_vectorstore.as_retriever(search_kwargs={"k": 20})
+    
+    # Get results with scores
+    faiss_results = faiss_retriever.get_relevant_documents(query)
+    
+    # Filter FAISS results by similarity threshold
+    filtered_results = []
+    for doc in faiss_results:
+        # FAISS returns distance, convert to similarity
+        # For cosine similarity: similarity = 1 - distance
+        distance = doc.metadata.get('score', 0) if 'score' in doc.metadata else 0
+        similarity = 1 - distance
+        
+        if similarity >= similarity_threshold:
+            filtered_results.append(doc)
+    
+    # Get BM25 results (they don't have similarity scores in the same way)
+    bm25_results = bm25_retriever.get_relevant_documents(query)
+    
+    # Combine results (you can implement your own ensemble logic here)
+    # For now, let's prioritize FAISS results above threshold, then BM25
+    unique_results = {}
+    
+    # Add filtered FAISS results first
+    for doc in filtered_results:
+        unique_results[doc.page_content] = doc
+    
+    # Add BM25 results (you might want to limit these too)
+    for doc in bm25_results[:10]:  # Limit BM25 results
+        if doc.page_content not in unique_results:
+            unique_results[doc.page_content] = doc
+    
+    return list(unique_results.keys())
