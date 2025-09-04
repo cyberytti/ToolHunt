@@ -39,14 +39,9 @@ ToolHunt is a comprehensive cybersecurity tool discovery platform featuring over
 *Main search interface with cyberpunk styling.*
 
 <!-- SCREENSHOT 2 - Search Results -->
-![Search Results Display](docs/screenshots/search-results.png)
-*Tool search results with categorization and descriptions. Recommended dimensions: 1200x700px.*
+![Search Results Display](https://github.com/cyberytti/ToolHunt/blob/main/docs/showcase_images/Screenshot%20from%202025-09-04%2015-58-40.png)
+*Tool search results with categorization and descriptions.*
 
-<!-- SCREENSHOT 3 - Tool Categories -->
-![Tool Categories](docs/screenshots/tool-categories.png)
-*Various tool categories with color-coded styling. Recommended dimensions: 1200x700px.*
-
-*Place all screenshot files in docs/screenshots/ directory.*
 
 ## Technology Stack 🛠️
 
