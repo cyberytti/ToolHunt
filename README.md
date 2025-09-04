@@ -163,22 +163,6 @@ The comprehensive database includes:
 
 ---
 
-## 🤖 Search Architecture
-
-```mermaid
-graph TD
-    A[User Query] --> B(Semantic Embedding)
-    A --> C(BM25 Keyword Extraction)
-    B --> D[FAISS Vector Search]
-    C --> E[Keyword Matching]
-    D --> F[Result Fusion]
-    E --> F
-    F --> G[Ranked Results]
-    G --> H[Cyberpunk UI Display]
-```
-
----
-
 ## 🤝 Contributing
 
 We welcome contributions from the cybersecurity community!
