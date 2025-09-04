@@ -25,7 +25,7 @@ ToolHunt is a comprehensive cybersecurity tool discovery platform featuring over
 
 ## Live Demo 🎥
 
-![Demo Video](https://github.com/cyberytti/ToolHunt/blob/main/docs/showcase_video/ToolHunt_showcase_video.mp4)
+![Demo](https://github.com/cyberytti/ToolHunt/blob/main/docs/showcase_video/ToolHunt_showcase_video.gif)
 
 
 ## Screenshots 📸
