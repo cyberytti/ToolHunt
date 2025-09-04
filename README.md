@@ -55,7 +55,7 @@ ToolHunt is a comprehensive cybersecurity tool discovery platform featuring over
 - **🐍 [Python 3.12+](https://python.org)** - Core application language
 
 ### Search Engine
-- **⛓️ [LangChain](https://langchain.com/)** - LLM framework for document processing
+- **⛓️ [LangChain](https://langchain.com/)** - used in similarity search
 - **🤗 [HuggingFace Transformers](https://huggingface.co/sentence-transformers)** - Sentence embedding models
 - **🔍 [FAISS](https://faiss.ai/)** - Vector similarity search
 - **📊 [BM25](https://en.wikipedia.org/wiki/Okapi_BM25)** - Keyword-based retrieval
