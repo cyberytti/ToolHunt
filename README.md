@@ -1,177 +1,236 @@
 # ToolHunt 🔍
 *Advanced Cybersecurity Arsenal Discovery Platform*
 
-<!-- PROJECT LOGO -->
-![ToolHunt Logo](https://github.com/cyberytti/ToolHunt/blob/main/docs/logo/ToolHunt_logo.png)
+<p align="center">
+  <img src="https://github.com/cyberytti/ToolHunt/blob/main/docs/logo/ToolHunt_logo.png" alt="ToolHunt Logo" width="600"/>
+</p>
 
+<p align="center">
+  <strong>Discover. Deploy. Defend.</strong>
+</p>
 
-[![License: GNU](https://img.shields.io/badge/License-GNU-green.svg)](https://opensource.org/licenses/GNU)
-[![Python Version](https://img.shields.io/badge/python-3.12+-blue.svg)](https://python.org)
-[![Flask](https://img.shields.io/badge/flask-2.0+-red.svg)](https://flask.palletsprojects.com/)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
+<p align="center">
+  <img src="https://img.shields.io/badge/Tools-3000+-brightgreen?style=for-the-badge&logo=hammer-screwdriver" alt="3000+ Tools"/>
+  <img src="https://img.shields.io/badge/Python-3.12+-blue?style=for-the-badge&logo=python" alt="Python 3.12+"/>
+  <img src="https://img.shields.io/badge/Flask-2.0+-red?style=for-the-badge&logo=flask" alt="Flask 2.0+"/>
+  <img src="https://img.shields.io/badge/License-GNU-green?style=for-the-badge&logo=gnu" alt="GNU License"/>
+</p>
 
-## Overview 🌟
+---
 
-ToolHunt is a comprehensive cybersecurity tool discovery platform featuring over 3,000 security tools in a searchable database. Built with semantic search capabilities, it helps security professionals, penetration testers, and researchers quickly find the right tools for their specific needs using natural language queries.
+## 🌟 Overview
 
-## Key Features 🚀
+ToolHunt is your ultimate cybersecurity tool discovery platform, featuring **3,000+ security tools** in a searchable database. With advanced semantic search capabilities, it helps security professionals, penetration testers, and researchers quickly find the perfect tools for their specific missions using natural language queries.
 
-- **🔍 Semantic Search Engine**: Advanced search using sentence transformers and FAISS vector similarity for intelligent tool discovery
-- **🗃️ Comprehensive Database**: 3,000+ cybersecurity tools across multiple categories including network scanning, vulnerability assessment, password cracking, and digital forensics
-- **⚡ Hybrid Search Algorithm**: Combines semantic search with BM25 keyword matching for optimal result relevance
-- **🎮 Cyberpunk-Themed Interface**: Terminal-inspired dark UI with animated backgrounds and responsive design
-- **⚡ Real-time Results**: Fast Flask-powered backend with instant search results and tool categorization
-- **☁️ Google Colab Support**: Integrated notebook for easy cloud deployment with ngrok tunneling
+---
 
-## Live Demo 🎥
+## 🚀 Key Features
 
-![Demo](https://github.com/cyberytti/ToolHunt/blob/main/docs/showcase_video/ToolHunt_showcase_video.gif)
+| Feature | Description |
+|---------|-------------|
+| 🔍 **Semantic Search Engine** | Advanced AI-powered search using sentence transformers and FAISS vector similarity |
+| 🗃️ **Comprehensive Database** | 3,000+ cybersecurity tools across multiple categories and specialties |
+| ⚡ **Hybrid Search Algorithm** | Combines semantic search with BM25 keyword matching for optimal relevance |
+| 🎮 **Cyberpunk Interface** | Immersive terminal-inspired dark UI with animated backgrounds |
+| ☁️ **Cloud Deployment** | One-click Google Colab deployment with ngrok tunneling |
+| 📱 **Responsive Design** | Works seamlessly on desktop, tablet, and mobile devices |
 
+---
 
-## Screenshots 📸
+## 🎥 Live Demo
 
-<!-- SCREENSHOT 1 - Main Interface -->
+<p align="center">
+  <img src="https://github.com/cyberytti/ToolHunt/blob/main/docs/showcase_video/ToolHunt_showcase_video.gif" alt="ToolHunt Demo" width="800"/>
+</p>
+
+---
+
+## 📸 Screenshots
+
+### Main Search Interface
 ![Main Search Interface](https://github.com/cyberytti/ToolHunt/blob/main/docs/showcase_images/Screenshot%20from%202025-09-04%2015-57-39.png)
-*Main search interface with cyberpunk styling.*
+*Cyberpunk-styled main interface with immersive terminal aesthetic*
 
-<!-- SCREENSHOT 2 - Search Results -->
+### Search Results
 ![Search Results Display](https://github.com/cyberytti/ToolHunt/blob/main/docs/showcase_images/Screenshot%20from%202025-09-04%2015-58-40.png)
-*Tool search results with categorization and descriptions.*
+*Intelligent tool categorization with detailed descriptions*
 
+---
 
-## Technology Stack 🛠️
+## 🛠️ Technology Stack
 
 ### Frontend
-- **🎨 HTML5/CSS3** - Responsive cyberpunk-themed interface
-- **⚡ Vanilla JavaScript** - Dynamic search functionality and UI interactions
-- **✨ Font Awesome** - Security-themed icons and visual elements
+| Technology | Purpose |
+|------------|---------|
+| ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white) | Structure & Semantics |
+| ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white) | Cyberpunk Styling |
+| ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black) | Dynamic Interactions |
+| ![Font Awesome](https://img.shields.io/badge/Font_Awesome-528DD7?style=flat-square&logo=font-awesome&logoColor=white) | Security Icons |
 
 ### Backend
-- **🐍 [Flask](https://flask.palletsprojects.com/)** - Lightweight web framework
-- **🐍 [Python 3.12+](https://python.org)** - Core application language
+| Technology | Purpose |
+|------------|---------|
+| ![Flask](https://img.shields.io/badge/Flask-000000?style=flat-square&logo=flask&logoColor=white) | Web Framework |
+| ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) | Core Language |
 
 ### Search Engine
-- **⛓️ [LangChain](https://langchain.com/)** - used in similarity search
-- **🤗 [HuggingFace Transformers](https://huggingface.co/sentence-transformers)** - Sentence embedding models
-- **🔍 [FAISS](https://faiss.ai/)** - Vector similarity search
-- **📊 [BM25](https://en.wikipedia.org/wiki/Okapi_BM25)** - Keyword-based retrieval
+| Technology | Purpose |
+|------------|---------|
+| ![LangChain](https://img.shields.io/badge/LangChain-FF6B00?style=flat-square) | Similarity Search |
+| ![HuggingFace](https://img.shields.io/badge/HuggingFace-FFD21E?style=flat-square&logo=huggingface&logoColor=black) | Sentence Embeddings |
+| ![FAISS](https://img.shields.io/badge/FAISS-00C2FF?style=flat-square) | Vector Similarity |
+| ![BM25](https://img.shields.io/badge/BM25-8A2BE2?style=flat-square) | Keyword Matching |
 
-### Data Storage
-- **💾 CSV Database** - Tool information storage with structured data
+---
 
-### Deployment
-- **☁️ [Google Colab](https://colab.research.google.com/)** - Cloud notebook environment
-- **🚇 [ngrok](https://ngrok.com/)** - Secure tunnel for public access
+## 📁 Project Structure
 
-## Project Structure 📁
-
-```
+```plaintext
 ToolHunt/
-├── app.py                      # Main Flask application entry point
-├── backend/                    # Core search functionality
-│   ├── main.py                # Search orchestration and CSV processing
+├── 🐍 app.py                      # Main Flask application
+├── 🔧 backend/
+│   ├── main.py                # Search orchestration
 │   ├── semantic_search.py     # Hybrid search implementation
-│   └── database/              # Tool database storage
-│       └── tool_list_database.csv  # 3000+ cybersecurity tools
-├── templates/                 # Frontend templates
-│   └── index.html            # Main application interface
-├── toolhunt_in_colab.py      # Google Colab deployment script
-├── pyproject.toml            # Python project configuration
-├── uv.lock                   # Dependency lock file
-├── LICENSE                   # MIT license
-└── README.md                 # Project documentation
+│   └── database/
+│       └── tool_list_database.csv  # 3000+ tools database
+├── 🎨 templates/
+│   └── index.html            # Cyberpunk interface
+├── ☁️ toolhunt_in_colab.py      # Google Colab deployment
+├── ⚙️ pyproject.toml            # Project configuration
+├── 📦 uv.lock                   # Dependency lock
+├── 📄 LICENSE                   # GNU License
+└── 📖 README.md                 # You are here!
 ```
 
-## Quick Start 🚀
+---
+
+## 🚀 Quick Start
 
 ### Prerequisites
-- Python 3.12 or higher
+- Python 3.12+
 - pip package manager
-- [To be determined - specific system requirements]
 
 ### Local Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/ToolHunt.git
+git clone https://github.com/cyberytti/ToolHunt.git
 cd ToolHunt
 
 # Install dependencies
-pip install flask langchain langchain-huggingface langchain-community faiss-cpu rank_bm25 sentence-transformers
+pip install -r requirements.txt
 
-# Run the application
+# Launch ToolHunt
 python app.py
 ```
 
-The application will start at `http://localhost:5000`
+Access your local instance at: `http://localhost:5000`
 
-### Google Colab Deployment
+### ☁️ One-Click Cloud Deployment
 
-1. Open the provided Colab notebook: `toolhunt_in_colab.py`
-2. Replace the ngrok authentication token with your own
-3. Run all cells to deploy with public URL access
-4. Access your ToolHunt instance via the generated ngrok URL
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cyberytti/ToolHunt/blob/main/toolhunt_in_colab.py)
 
-## Usage 🔍
+1. Click the Google Colab badge above
+2. Replace the ngrok authentication token
+3. Run all cells
+4. Access your public ToolHunt instance via the generated URL
 
-### Basic Search
-Navigate to the main interface and enter search queries using natural language:
+---
 
+## 🔍 Usage Examples
+
+| Search Type | Example Queries |
+|-------------|-----------------|
+| **Network Security** | `"network scanner"`, `"port enumeration tools"` |
+| **Web Application** | `"sql injection tools"`, `"web vulnerability scanner"` |
+| **Password Attacks** | `"password cracking utilities"`, `"brute force tools"` |
+| **Forensics** | `"digital forensics analysis"`, `"memory analysis tools"` |
+| **Reconnaissance** | `"OSINT gathering tools"`, `"subdomain enumeration"` |
+
+---
+
+## 💾 Database Schema
+
+The comprehensive database includes:
+
+| Field | Description |
+|-------|-------------|
+| **Tool Name** | Official tool name |
+| **Description** | Detailed functionality description |
+| **Category** | Primary cybersecurity category |
+| **Link** | Official documentation/download URL |
+| **Platform** | Supported operating systems |
+
+---
+
+## 🤖 Search Architecture
+
+```mermaid
+graph TD
+    A[User Query] --> B(Semantic Embedding)
+    A --> C(BM25 Keyword Extraction)
+    B --> D[FAISS Vector Search]
+    C --> E[Keyword Matching]
+    D --> F[Result Fusion]
+    E --> F
+    F --> G[Ranked Results]
+    G --> H[Cyberpunk UI Display]
 ```
-Example searches:
-- "network scanner"
-- "sql injection tools" 
-- "password cracking utilities"
-- "vulnerability assessment"
-- "digital forensics analysis"
-```
 
-### Search Features
-- **🧠 Semantic Understanding**: Searches understand context and intent
-- **📂 Category Filtering**: Tools are automatically categorized
-- **📊 Relevance Scoring**: Results ranked by similarity and keyword matching
-- **ℹ️ Tool Information**: Each result includes description, category, and direct links
+---
 
-## Database 💾
+## 🤝 Contributing
 
-The tool database contains 3,000+ cybersecurity tools with the following structure:
-- **Tool Name**: Official tool name
-- **Description**: Detailed functionality description  
-- **Link**: Official download/documentation URL
+We welcome contributions from the cybersecurity community!
 
-## Search Algorithm 🤖
+### Development Process
+1. 🍴 Fork the repository
+2. 🌿 Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. 💻 Make your changes
+4. ✅ Test thoroughly
+5. 📝 Commit your changes (`git commit -m 'Add amazing feature'`)
+6. 📤 Push to the branch (`git push origin feature/amazing-feature`)
+7. 🔀 Open a Pull Request
 
-ToolHunt uses a hybrid search approach:
-
-1. **🔍 Semantic Search**: Uses HuggingFace sentence transformers to create embeddings
-2. **📐 Vector Similarity**: FAISS performs fast similarity matching
-3. **🔤 Keyword Matching**: BM25 handles exact keyword queries
-4. **🔄 Result Fusion**: Combines both approaches for optimal relevance
-
-## Contributing 🤝
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Make your changes following the existing code style
-4. Test your changes locally
-5. Commit your changes (`git commit -m 'Add amazing feature'`)
-6. Push to the branch (`git push origin feature/amazing-feature`)
-7. Open a Pull Request
-
-### Development Guidelines
-- Follow PEP 8 Python style guidelines
-- Maintain the cyberpunk aesthetic for UI changes
+### Guidelines
+- Follow PEP 8 style guidelines
+- Maintain the cyberpunk aesthetic
 - Test search functionality with various queries
 - Update documentation for new features
 
-## Ethical Use ⚖️
+---
 
-ToolHunt is designed for legitimate cybersecurity professionals, researchers, and educational purposes. Users are responsible for:
-- Complying with all applicable laws and regulations
-- Using tools only on systems they own or have explicit permission to test
-- Following responsible disclosure practices
-- Respecting terms of service for included tools
+## ⚖️ Ethical Use
 
-## License 📄
+> **Important**: ToolHunt is designed for legitimate cybersecurity purposes only.
 
-This project is licensed under the GNU License - see the [LICENSE](LICENSE) file for details.
+**Responsible Usage Guidelines:**
+- 🔒 Use only on systems you own or have explicit permission to test
+- 📜 Comply with all applicable laws and regulations
+- 🤝 Follow responsible disclosure practices
+- 📋 Respect terms of service for included tools
+
+---
+
+## 📄 License
+
+This project is licensed under the **GNU License** - see the [LICENSE](LICENSE) file for details.
+
+---
+
+<p align="center">
+  <strong>ToolHunt 🔍 - Empowering Cybersecurity Professionals Worldwide</strong>
+</p>
+
+<p align="center">
+  <sub>Built with ❤️ by the cybersecurity community</sub>
+</p>
+
+<p align="center">
+  <a href="https://github.com/cyberytti/ToolHunt/stargazers">
+    <img src="https://img.shields.io/github/stars/cyberytti/ToolHunt?style=social" alt="GitHub stars"/>
+  </a>
+  <a href="https://github.com/cyberytti/ToolHunt/fork">
+    <img src="https://img.shields.io/github/forks/cyberytti/ToolHunt?style=social" alt="GitHub forks"/>
+  </a>
+</p>
