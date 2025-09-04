@@ -183,6 +183,4 @@ ToolHunt is designed for legitimate cybersecurity professionals, researchers, an
 
 ## License 📄
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-The MIT License allows for commercial and non-commercial use, modification, and distribution with proper attribution.
+This project is licensed under the GNU License - see the [LICENSE](LICENSE) file for details.
