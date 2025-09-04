@@ -2,8 +2,8 @@
 *Advanced Cybersecurity Arsenal Discovery Platform*
 
 <!-- PROJECT LOGO -->
-![ToolHunt Logo](docs/logo.png)
-*Replace with your project logo. Recommended dimensions: 400x200px. Place logo file in docs/ directory.*
+![ToolHunt Logo](https://github.com/cyberytti/ToolHunt/blob/main/docs/logo/ToolHunt_logo.png)
+
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![Python Version](https://img.shields.io/badge/python-3.12+-blue.svg)](https://python.org)
