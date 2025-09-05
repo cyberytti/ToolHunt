@@ -1,5 +1,5 @@
 # ToolHunt 🔍
-*Advanced Cybersecurity Arsenal Discovery Platform*
+*Advance search engine for finding cybersecurity tools that match different needs.*
 
 <p align="center">
   <img src="https://github.com/cyberytti/ToolHunt/blob/main/docs/logo/ToolHunt_logo.png" alt="ToolHunt Logo" width="600"/>
@@ -20,7 +20,7 @@
 
 ## 🌟 Overview
 
-ToolHunt is your ultimate cybersecurity tool discovery platform, featuring **3,000+ security tools** in a searchable database. With advanced semantic search capabilities, it helps security professionals, penetration testers, and researchers quickly find the perfect tools for their specific missions using natural language queries.
+ToolHunt is an advanced search engine that helps you quickly find the right cybersecurity tool from a database of over 3,000 options. Just describe what you need in plain language, and its smart, elastic search will return the best matches for security pros, pentesters, and researchers.
 
 ---
 
@@ -128,12 +128,11 @@ Access your local instance at: `http://localhost:5000`
 
 ### ☁️ One-Click Cloud Deployment
 
-[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cyberytti/ToolHunt/blob/main/toolhunt_in_colab.py)
+![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)
 
-1. Click the Google Colab badge above
-2. Replace the ngrok authentication token
-3. Run all cells
-4. Access your public ToolHunt instance via the generated URL
+This search engine needs a GPU.
+
+We’ve made it easy: open the Colab notebook, pick a T4 GPU, paste your ngrok token, and run the file toolhunt_in_colab.py. Colab will give you a public link to use ToolHunt right away.
 
 ---
 
