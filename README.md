@@ -5,9 +5,7 @@
   <img src="https://github.com/cyberytti/ToolHunt/blob/main/docs/logo/ToolHunt_logo.png" alt="ToolHunt Logo" width="600"/>
 </p>
 
-<p align="center">
-  <strong>Discover. Deploy. Defend.</strong>
-</p>
+
 
 <p align="center">
   <img src="https://img.shields.io/badge/Tools-3000+-brightgreen?style=for-the-badge&logo=hammer-screwdriver" alt="3000+ Tools"/>
