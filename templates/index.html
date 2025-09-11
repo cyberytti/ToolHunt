@@ -713,7 +713,6 @@
         const toolsGrid = document.getElementById('toolsGrid');
         const resultsCount = document.getElementById('resultsCount');
         const loadingIndicator = document.getElementById('loadingIndicator');
-        const sortOptions = document.getElementById('sortOptions');
         const exampleTags = document.querySelectorAll('.example-tag');
 
         // Update time in status bar
@@ -738,13 +737,6 @@
                 searchInput.value = cleanText;
                 performSearch();
             });
-        });
-
-        sortOptions.addEventListener('change', () => {
-            const query = searchInput.value.trim();
-            if (query && toolsGrid.children.length > 0 && !toolsGrid.querySelector('.no-results')) {
-                performSearch(); // Re-search with current query to re-sort
-            }
         });
 
         // Search Function
@@ -806,6 +798,12 @@
             });
         }
 
+        function escapeHTML(str) {
+            const div = document.createElement('div');
+            div.appendChild(document.createTextNode(str));
+            return div.innerHTML;
+        }
+
         // Display Results
         function displayResults(tools) {
             // Ensure tools is an array
@@ -813,16 +811,7 @@
                 tools = [];
             }
             
-            // Sort tools based on selected option (removed 'name' option)
-            const sortBy = sortOptions ? sortOptions.value : 'relevance';
             let sortedTools = [...tools];
-            
-            switch(sortBy) {
-                case 'category':
-                    sortedTools.sort((a, b) => (a.category || 'Uncategorized').localeCompare(b.category || 'Uncategorized'));
-                    break;
-                // 'relevance' keeps original order (from search)
-            }
             
             // Update results count
             if (sortedTools.length === 0) {
@@ -854,19 +843,15 @@
                 const toolCard = document.createElement('div');
                 toolCard.className = 'tool-card';
                 
-                // Determine category class for styling
-                const categoryClass = getCategoryClass(tool.category);
-                
                 toolCard.innerHTML = `
                     <div class="card-header">
-                        <h3>${tool.name || 'Unknown Tool'}</h3>
-                        <span class="category ${categoryClass}">${tool.category || 'Uncategorized'}</span>
+                        <h3>${escapeHTML(tool.name || 'Unknown Tool')}</h3>
                     </div>
                     <div class="card-body">
-                        <p>${tool.description || 'No description available'}</p>
+                        <p>${escapeHTML(tool.description || 'No description available')}</p>
                     </div>
                     <div class="card-footer">
-                        <a href="${tool.link || '#'}" target="_blank" class="tool-link" ${!tool.link ? 'style="opacity: 0.5; pointer-events: none;"' : ''}>
+                        <a href="${escapeHTML(tool.link || '#')}" target="_blank" class="tool-link" ${!tool.link ? 'style="opacity: 0.5; pointer-events: none;"' : ''}>
                             <i class="fas fa-external-link-alt"></i> ${tool.link ? 'Access Tool' : 'No Link Available'}
                         </a>
                     </div>
@@ -881,25 +866,13 @@
             });
         }
 
-        // Get category class for styling
-        function getCategoryClass(category) {
-            if (!category) return '';
-            const cat = category.toLowerCase();
-            if (cat.includes('network')) return 'network';
-            if (cat.includes('password')) return 'password';
-            if (cat.includes('vulnerability') || cat.includes('vuln')) return 'vulnerability';
-            if (cat.includes('forensic')) return 'forensics';
-            if (cat.includes('web')) return 'web';
-            return '';
-        }
-
         // Show error with cybersecurity theme
         function showError(message) {
             toolsGrid.innerHTML = `
                 <div class="no-results">
                     <i class="fas fa-exclamation-triangle" style="color: var(--danger);"></i>
                     <h3 style="color: var(--danger);">System Error</h3>
-                    <p>${message}</p>
+                    <p>${escapeHTML(message)}</p>
                     <p style="margin-top: 15px; font-size: 0.9rem; color: var(--gray);">
                         <i class="fas fa-info-circle"></i> Check network connection and try again
                     </p>
@@ -925,7 +898,7 @@
                 border: 2px solid ${type === 'warning' ? '#ffaa00' : '#00ff88'};
                 box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             `;
-            alert.innerHTML = `<i class="fas fa-${type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i> ${message}`;
+            alert.innerHTML = `<i class="fas fa-${type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i> ${escapeHTML(message)}`;
             
             document.body.appendChild(alert);
             
