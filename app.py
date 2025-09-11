@@ -23,8 +23,7 @@ def search_tools():
             formatted_results.append({
                 'name': tool[0],
                 'description': tool[1],
-                'link': tool[2] if len(tool) > 2 else '',
-                'category': tool[3] if len(tool) > 3 else ''
+                'link': tool[2] if len(tool) > 2 else ''
             })
         return jsonify({'results': formatted_results})
     except Exception as e:
