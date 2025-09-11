@@ -715,7 +715,9 @@
         const loadingIndicator = document.getElementById('loadingIndicator');
         const exampleTags = document.querySelectorAll('.example-tag');
 
-        // Update time in status bar
+        /**
+         * Updates the current time in the status bar every second.
+         */
         function updateTime() {
             const now = new Date();
             document.getElementById('currentTime').textContent = now.toLocaleTimeString();
@@ -739,7 +741,9 @@
             });
         });
 
-        // Search Function
+        /**
+         * Performs a search when the user clicks the search button or presses Enter.
+         */
         function performSearch() {
             const query = searchInput.value.trim();
             
@@ -748,11 +752,11 @@
                 return;
             }
 
-            // Show loading indicator
+            // Show loading indicator and hide results
             loadingIndicator.style.display = 'block';
             resultsContainer.style.display = 'none';
 
-            // Call Flask backend
+            // Call the Flask backend to perform the search
             fetch('/search', {
                 method: 'POST',
                 headers: {
@@ -766,11 +770,11 @@
                     throw new Error(data.error);
                 }
                 
-                // Handle null or empty results
+                // Display the search results
                 const results = data.results || [];
                 displayResults(results);
                 
-                // Hide loading, show results
+                // Hide loading indicator and show results
                 loadingIndicator.style.display = 'none';
                 resultsContainer.style.display = 'block';
             })
@@ -778,7 +782,7 @@
                 console.error('Error:', error);
                 loadingIndicator.style.display = 'none';
                 
-                // Ensure resultsContainer is shown and properly display error
+                // Show an error message in the results container
                 resultsContainer.style.display = 'block';
                 toolsGrid.innerHTML = `
                     <div class="no-results">
@@ -798,13 +802,21 @@
             });
         }
 
+        /**
+         * Escapes HTML special characters to prevent XSS attacks.
+         * @param {string} str The string to escape.
+         * @returns {string} The escaped string.
+         */
         function escapeHTML(str) {
             const div = document.createElement('div');
             div.appendChild(document.createTextNode(str));
             return div.innerHTML;
         }
 
-        // Display Results
+        /**
+         * Displays the search results in the tools grid.
+         * @param {Array} tools The list of tools to display.
+         */
         function displayResults(tools) {
             // Ensure tools is an array
             if (!Array.isArray(tools)) {
@@ -813,7 +825,7 @@
             
             let sortedTools = [...tools];
             
-            // Update results count
+            // Update the results count
             if (sortedTools.length === 0) {
                 resultsCount.innerHTML = `<i class="fas fa-search-minus"></i> No tools found in arsenal`;
             } else {
@@ -823,7 +835,7 @@
             // Clear previous results
             toolsGrid.innerHTML = '';
             
-            // Display message if no results
+            // Display a message if there are no results
             if (sortedTools.length === 0) {
                 toolsGrid.innerHTML = `
                     <div class="no-results">
@@ -838,11 +850,12 @@
                 return;
             }
             
-            // Populate tools grid
+            // Create and append a tool card for each tool
             sortedTools.forEach((tool, index) => {
                 const toolCard = document.createElement('div');
                 toolCard.className = 'tool-card';
                 
+                // Create the HTML for the tool card, escaping all user-provided data to prevent XSS
                 toolCard.innerHTML = `
                     <div class="card-header">
                         <h3>${escapeHTML(tool.name || 'Unknown Tool')}</h3>
@@ -857,7 +870,7 @@
                     </div>
                 `;
                 
-                // Add staggered animation
+                // Add a staggered animation to the tool cards
                 toolCard.style.animationDelay = `${index * 0.1}s`;
                 toolCard.style.animation = 'fadeInUp 0.6s ease forwards';
                 toolCard.style.opacity = '0';
@@ -866,7 +879,10 @@
             });
         }
 
-        // Show error with cybersecurity theme
+        /**
+         * Shows an error message in the tools grid.
+         * @param {string} message The error message to display.
+         */
         function showError(message) {
             toolsGrid.innerHTML = `
                 <div class="no-results">
@@ -880,9 +896,13 @@
             `;
         }
 
-        // Show alert function
+        /**
+         * Shows a temporary alert message in the top-right corner of the screen.
+         * @param {string} message The message to display.
+         * @param {string} type The type of alert ('info' or 'warning').
+         */
         function showAlert(message, type = 'info') {
-            // Create alert element
+            // Create the alert element
             const alert = document.createElement('div');
             alert.style.cssText = `
                 position: fixed;
@@ -902,14 +922,14 @@
             
             document.body.appendChild(alert);
             
-            // Remove after 3 seconds
+            // Remove the alert after 3 seconds
             setTimeout(() => {
                 alert.style.animation = 'slideOutRight 0.3s ease';
                 setTimeout(() => alert.remove(), 300);
             }, 3000);
         }
 
-        // Add slide animations for alerts
+        // Add the slide-in/out animations for the alerts
         const style = document.createElement('style');
         style.textContent = `
             @keyframes slideInRight {
@@ -923,7 +943,7 @@
         `;
         document.head.appendChild(style);
 
-        // Initialize
+        // Initialize the application
         window.addEventListener('DOMContentLoaded', () => {
             // Ensure all elements exist before setting up
             if (resultsContainer) {
