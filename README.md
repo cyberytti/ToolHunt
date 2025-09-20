@@ -90,7 +90,7 @@ ToolHunt/
 │   ├── main.py                # Search orchestration
 │   ├── semantic_search.py     # Hybrid search implementation
 │   └── database/
-│       └── tool_list_database.csv  # 3000+ tools database
+│       └── tools.db  # 3000+ tools database
 ├── 🎨 templates/
 │   └── index.html            # Cyberpunk interface
 ├── ☁️ toolhunt_in_colab.py      # Google Colab deployment
