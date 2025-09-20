@@ -1,5 +1,6 @@
 ## Download the required model for semantic search
 from sentence_transformers import SentenceTransformer
+import os
 sentences = ["This is an example sentence", "Each sentence is converted"]
 
 model = SentenceTransformer('sentence-transformers/all-MiniLM-L12-v2')
@@ -7,16 +8,15 @@ embeddings = model.encode(sentences)
 print(embeddings)
 
 ## Download dependencises
-! git clone https://github.com/cyberytti/ToolHunt
-
-!pip install pyngrok langchain langchain-huggingface langchain-community faiss-cpu rank_bm25
-
+!git clone https://github.com/cyberytti/ToolHunt
+os.chdir("ToolHunt")
+!pip install -r requirements.txt
+!pip install pyngrok
 
 # =========================
 # Directly Run ToolHunt in Colab (Debugging Mode)
 # =========================
 
-import os
 import sys
 import threading
 import time
@@ -40,7 +40,7 @@ print(f"ToolHunt dir: {toolhunt_dir}")
 print(f"sys.path (relevant parts): {[p for p in sys.path if 'content' in p]}")
 
 # Set ngrok token
-ngrok.set_auth_token('Your ngrok authentication key')
+ngrok.set_auth_token('your ngrok auth')
 
 # --- 2. Import and run Flask app ---
 try:
