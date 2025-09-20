@@ -1,6 +1,6 @@
-import csv
-from pathlib import Path
 from .semantic_search import search
+import sqlite3
+
 
 
 def find_indices(primary_list, query_list):
@@ -24,20 +24,39 @@ def find_indices(primary_list, query_list):
     return indices
 
 
-csv_path = Path("backend/database/tool_list_database.csv")
-with csv_path.open(newline='', encoding="utf-8") as f:
-    tools = list(csv.reader(f))        # includes header
-    header, *tools = tools             # split header / body if you want
-print("Loaded", len(tools), "rows")
+
+conn = sqlite3.connect('backend/database/tools.db')
+cursor = conn.cursor()
+
+# # Create table
+# cursor.execute('''
+#     CREATE TABLE IF NOT EXISTS tools (
+#         name TEXT,
+#         description TEXT,
+#         url TEXT
+#     )
+# ''')
+
+
+# # Insert values:
+#     cursor.execute('''
+#         INSERT INTO tools (name, description, url)
+#         VALUES (?, ?, ?)
+#     ''', (name,tool's description, url))
 
 
 descriptions=[]
 final_outputs_list=[]
 
-
-for r in tools:
-    text=f"{r[0]} {r[1]}"
+cursor.execute("SELECT * FROM tools")
+tools=cursor.fetchall()
+for row in tools:
+    text=f"{row[0]} {row[1]}"
     descriptions.append(text.lower())
+
+# Commit changes and close connection
+conn.commit()
+conn.close()
 
 
 
