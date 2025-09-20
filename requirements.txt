@@ -1,0 +1,6 @@
+langchain
+langchain-huggingface
+langchain-community
+faiss-cpu
+rank_bm25
+flask
