@@ -184,7 +184,7 @@ class DatabaseUpdater:
         """
         try:
             # Attempt CSV and SQL insertion
-            csv_added = self.update_csv_db(name, description, url, check_duplicate)
+            #csv_added = self.update_csv_db(name, description, url, check_duplicate)
             sql_added = self.update_sql_db(name, description, url, check_duplicate)
 
             # Both should agree on duplication status
