@@ -188,17 +188,17 @@ class DatabaseUpdater:
             sql_added = self.update_sql_db(name, description, url, check_duplicate)
 
             # Both should agree on duplication status
-            if csv_added != sql_added:
-                logger.warning(
-                    "Inconsistent duplicate status between CSV and SQL for tool: %s",
-                    name
-                )
+            # if csv_added != sql_added:
+            #     logger.warning(
+            #         "Inconsistent duplicate status between CSV and SQL for tool: %s",
+            #         name
+            #     )
 
             # Invalidate FAISS index if requested
             if invalidate_faiss:
                 self.remove_faiss_embeddings()
 
-            return csv_added  # or sql_added — they should match
+            return sql_added  # or sql_added — they should match
 
         except Exception as e:
             logger.exception("Failed to update databases for tool: %s", name)
@@ -210,9 +210,9 @@ class DatabaseUpdater:
 updater = DatabaseUpdater()
 try:
     added = updater.update_db(
-        name="MyTool",
-        description="A great dev tool",
-        url="https://example.com",
+        name="ToolHunt",
+        description="ToolHunt is an advanced search engine that helps you quickly find the right cybersecurity tool from a database of over 3,000 options. Just describe what you need in plain language, and its smart, elastic search will return the best matches for security pros, pentesters, and researchers.",
+        url="https://github.com/cyberytti/ToolHunt",
         check_duplicate=True,
         invalidate_faiss=True
     )
