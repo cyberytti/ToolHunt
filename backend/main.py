@@ -1,4 +1,4 @@
-from .semantic_search import search
+from .hybrid_search import search
 import sqlite3
 from sentence_transformers import SentenceTransformer
 
