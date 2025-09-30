@@ -22,7 +22,7 @@ def search(doc_list, query, similarity_threshold=0.5):
     # Create retrievers
     bm25_retriever = BM25Retriever.from_texts(doc_list)
     faiss_vectorstore = build_or_load_faiss_index(doc_list)
-    faiss_retriever = faiss_vectorstore.as_retriever(search_kwargs={"k": 20})
+    faiss_retriever = faiss_vectorstore.as_retriever(search_kwargs={"k": 198})
     
     # Get results with scores
     faiss_results = faiss_retriever.get_relevant_documents(query)
