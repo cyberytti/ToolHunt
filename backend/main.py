@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from .hybrid_search import search
 import sqlite3
 from sentence_transformers import SentenceTransformer
@@ -55,7 +57,12 @@ def find_indices(primary_list, query_list):
 
 
 
-conn = sqlite3.connect('backend/database/tools.db')
+DB_PATH = Path(__file__).resolve().parent / "database" / "tools.db"
+
+if not DB_PATH.exists():
+    raise FileNotFoundError(f"Tool database not found at {DB_PATH}")
+
+conn = sqlite3.connect(DB_PATH)
 cursor = conn.cursor()
 
 # # Create table
